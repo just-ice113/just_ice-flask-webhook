@@ -1,0 +1,22 @@
+import os
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+SECRET_HASH = os.environ.get("FLW_SECRET_HASH")
+
+@app.route("/flutterwave-webhook", methods=["POST"])
+def flutterwave_webhook():
+    signature = request.headers.get("verif-hash")
+    if signature != SECRET_HASH:
+        return jsonify({"status": "error", "message": "Invalid signature"}), 401
+
+    data = request.get_json()
+    if data.get('status') == 'successful':
+        email = data['data']['customer']['email']
+        print("Payment successful for:", email)
+
+    return jsonify({"status": "success", "message": "Webhook received"}), 200
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
