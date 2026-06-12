@@ -4,10 +4,8 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# Flutterwave secret hash
 SECRET_HASH = os.environ.get("FLW_SECRET_HASH")
 
-# Flutterwave webhook route
 @app.route("/flutterwave-webhook", methods=["POST"])
 def flutterwave_webhook():
     signature = request.headers.get("verif-hash")
@@ -21,7 +19,6 @@ def flutterwave_webhook():
 
     return jsonify({"status": "success", "message": "Webhook received"}), 200
 
-# Telegram webhook route
 @app.route("/telegram-webhook", methods=["POST"])
 def telegram_webhook():
     data = request.get_json()
