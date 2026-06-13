@@ -2,6 +2,7 @@ import os
 import requests
 import datetime
 from flask import Flask, request, jsonify
+import openai
 
 app = Flask(__name__)
 
@@ -12,27 +13,21 @@ TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 # --- Simple user storage (replace with database later) ---
 user_data = {}
 
-# --- AI Content Generation Function ---
+
+# Make sure you set OPENAI_API_KEY in your Render environment variables
+openai.api_key = os.environ.get("OPENAI_API_KEY")
+
 def generate_ai_content(prompt):
     """
-    Replace this with a real AI API call later.
-    For now, it simulates blog writing.
+    Generate a full blog post using OpenAI API.
     """
-    return f"""📝 Blog Draft:
-
-Title: {prompt}
-
-Introduction:
-This article explores {prompt.lower()} in detail...
-
-Main Body:
-- Point 1: Why {prompt.lower()} matters
-- Point 2: How it affects people
-- Point 3: Practical tips
-
-Conclusion:
-In summary, {prompt.lower()} is essential for growth and success.
-"""
+    response = openai.Completion.create(
+        model="text-davinci-003",   # or "gpt-3.5-turbo" if you use ChatCompletion
+        prompt=f"Write a detailed blog post about {prompt}. Include an introduction, body, and conclusion.",
+        max_tokens=600,
+        temperature=0.7
+    )
+    return response["choices"][0]["text"].strip()
 
 # --- Subscription Logic ---
 def is_subscribed(chat_id):
