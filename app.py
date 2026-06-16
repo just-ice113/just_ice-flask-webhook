@@ -95,6 +95,13 @@ def telegram_webhook():
     )
     return "ok", 200
 
+@app.route("/test-deepai")
+def test_deepai():
+    headers = {"api-key": os.environ.get("DEEP_AI_KEY")}
+    payload = {"text": "Test blog post about motivation"}
+    response = requests.post("https://api.deepai.org/api/text-generator", headers=headers, data=payload)
+    return response.text
+
 # --- Run locally (not used on Render) ---
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
