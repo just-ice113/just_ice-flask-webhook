@@ -14,20 +14,24 @@ TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 user_data = {}
 
 
-# Make sure you set OPENAI_API_KEY in your Render environment variables
-openai.api_key = os.environ.get("OPENAI_API_KEY")
-
 def generate_ai_content(prompt):
     """
-    Generate a full blog post using OpenAI API.
+    Generate a blog post using DeepAI Text Generator API.
     """
-    response = openai.Completion.create(
-        model="text-davinci-003",   # or "gpt-3.5-turbo" if you use ChatCompletion
-        prompt=f"Write a detailed blog post about {prompt}. Include an introduction, body, and conclusion.",
-        max_tokens=600,
-        temperature=0.7
+    headers = {"api-key": os.environ.get("DEEP_AI_KEY")}
+    payload = {"text": f"Write a detailed blog post about {prompt}. Include an introduction, body, and conclusion."}
+
+    response = requests.post(
+        "https://api.deepai.org/api/text-generator",
+        headers=headers,
+        data=payload
     )
-    return response["choices"][0]["text"].strip()
+
+    if response.status_code == 200:
+        data = response.json()
+        return data.get("output", "⚠️ Sorry, I couldn’t generate content right now.")
+    else:
+        return "⚠️ Error: Unable to reach DeepAI API."
 
 # --- Subscription Logic ---
 def is_subscribed(chat_id):
