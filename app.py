@@ -1,7 +1,6 @@
 import requests
 import datetime
 from flask import Flask, request, jsonify
-import openai
 
 app = Flask(__name__)
 
