@@ -100,6 +100,9 @@ def telegram_webhook():
     )
     return "ok", 200
 
+@app.route("/")
+def home():
+    return "✅ Flask app is running on Render!"
 
 # --- Run locally (not used on Render) ---
 if __name__ == "__main__":
