@@ -15,22 +15,27 @@ user_data = {}
 
 def generate_ai_content(prompt):
     """
-    Generate a blog post using DeepAI Text Generator API.
+    Generate a blog post using Groq API.
     """
-    headers = {"api-key": os.environ.get("DEEP_AI_KEY")}
-    payload = {"text": f"Write a detailed blog post about {prompt}. Include an introduction, body, and conclusion."}
+    headers = {
+        "Authorization": f"Bearer {os.environ.get('GROQ_API_KEY')}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "model": "mixtral-8x7b",  # or another Groq-hosted model
+        "messages": [
+            {"role": "system", "content": "You are a helpful AI writing assistant."},
+            {"role": "user", "content": f"Write a detailed blog post about {prompt}. Include an introduction, body, and conclusion."}
+        ]
+    }
 
-    response = requests.post(
-        "https://api.deepai.org/api/text-generator",
-        headers=headers,
-        data=payload
-    )
+    response = requests.post("https://api.groq.com/openai/v1/chat/completions", headers=headers, json=payload)
 
     if response.status_code == 200:
         data = response.json()
-        return data.get("output", "⚠️ Sorry, I couldn’t generate content right now.")
+        return data["choices"][0]["message"]["content"].strip()
     else:
-        return "⚠️ Error: Unable to reach DeepAI API."
+        return "⚠️ Error: Unable to reach Groq API."
 
 # --- Subscription Logic ---
 def is_subscribed(chat_id):
@@ -95,12 +100,6 @@ def telegram_webhook():
     )
     return "ok", 200
 
-@app.route("/test-deepai")
-def test_deepai():
-    headers = {"api-key": os.environ.get("DEEP_AI_KEY")}
-    payload = {"text": "Test blog post about motivation"}
-    response = requests.post("https://api.deepai.org/api/text-generator", headers=headers, data=payload)
-    return response.text
 
 # --- Run locally (not used on Render) ---
 if __name__ == "__main__":
