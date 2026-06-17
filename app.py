@@ -105,5 +105,25 @@ def home():
     return "✅ Flask app is running on Render!"
 
 # --- Run locally (not used on Render) ---
+
+# --- Groq Test Route ---
+@app.route("/test-groq")
+def test_groq():
+    headers = {
+        "Authorization": f"Bearer {os.environ.get('GROQ_API_KEY')}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "model": "mixtral-8x7b",  # or llama2-70b-4096, gemma-7b-it
+        "messages": [
+            {"role": "system", "content": "You are a helpful AI writing assistant."},
+            {"role": "user", "content": "Write a short blog post about motivation."}
+        ]
+    }
+
+    response = requests.post("https://api.groq.com/openai/v1/chat/completions", headers=headers, json=payload)
+
+    return response.text  # show full Groq response (success or error)
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
