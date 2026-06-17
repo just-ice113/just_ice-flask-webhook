@@ -22,7 +22,7 @@ def generate_ai_content(prompt):
         "Content-Type": "application/json"
     }
     payload = {
-        "model": "mixtral-8x7b",  # or another Groq-hosted model
+        "model": "llama2-70b-4096",  # or another Groq-hosted model
         "messages": [
             {"role": "system", "content": "You are a helpful AI writing assistant."},
             {"role": "user", "content": f"Write a detailed blog post about {prompt}. Include an introduction, body, and conclusion."}
@@ -114,7 +114,7 @@ def test_groq():
         "Content-Type": "application/json"
     }
     payload = {
-        "model": "mixtral-8x7b",  # or llama2-70b-4096, gemma-7b-it
+        "model": "llama2-70b-4096",  # or llama2-70b-4096, gemma-7b-it
         "messages": [
             {"role": "system", "content": "You are a helpful AI writing assistant."},
             {"role": "user", "content": "Write a short blog post about motivation."}
