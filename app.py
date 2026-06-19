@@ -21,7 +21,7 @@ def generate_ai_content(prompt):
         "Content-Type": "application/json"
     }
     payload = {
-        "model": "mistralai/mistral-7b-instruct",  # 👈 updated for OpenRouter
+        "model": "laguna/m1:free",  # 👈 updated for OpenRouter
         "messages": [
             {"role": "system", "content": "You are a helpful AI writing assistant."},
             {"role": "user", "content": f"Write a detailed blog post about {prompt}. Include an introduction, body, and conclusion."}
@@ -111,7 +111,7 @@ def test_openrouter():
         "Content-Type": "application/json"
     }
     payload = {
-        "model": "mistralai/mistral-7b-instruct",  # 👈 updated model name
+        "model": "laguna/m1:free",  # 👈 updated model name
         "messages": [
             {"role": "system", "content": "You are a helpful AI writing assistant."},
             {"role": "user", "content": "Write a short blog post about motivation."}
