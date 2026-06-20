@@ -42,7 +42,7 @@ def generate_ai_content(prompt):
     if response.status_code == 200:
         data = response.json()
         content = data["choices"][0]["message"]["content"].strip()
-        formatted = f"<b>Blog Post: {html.escape(prompt.title())}</b>\n\n{html.escape(content)}"
+        formatted = f"<b>Blog Post: {html.escape(prompt.title())}</b>\n\n{content}"
         return formatted
     else:
         return f"⚠️ Error {response.status_code}: {response.text}"
