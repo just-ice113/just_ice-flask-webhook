@@ -25,7 +25,7 @@ def generate_ai_content(prompt):
     "model": "openai/gpt-3.5-turbo:free",
     "messages": [
         {"role": "system", "content": "You are a helpful AI writing assistant."},
-        {"role": "user", "content": "Write a short blog post about motivation. Include an introduction, body, and conclusion."}
+        {"role": "user", "content": f"Write a detailed blog post about {prompt}. Use headings (bold), bullet points, and emojis like ✨🔥💡 for clarity. Include an introduction, body, and conclusion."}
     ]
 }
 
@@ -143,6 +143,10 @@ def telegram_webhook():
 @app.route("/")
 def home():
     return "✅ Flask app is running on Render!"
+
+@app.route("/status")
+def status():
+    return jsonify({"status": "ok", "message": "Bot is running"})
 
 # --- OpenRouter Test Route ---
 @app.route("/test-openrouter")
