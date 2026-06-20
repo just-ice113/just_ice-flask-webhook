@@ -127,7 +127,7 @@ def telegram_webhook():
         )
         print("Telegram response:", resp.status_code, resp.text)
         if resp.status_code != 200:
-            # fallback: send plain text
+            # fallback: send plain text if HTML fails
             requests.post(
                 f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
                 json={"chat_id": chat_id, "text": reply},
