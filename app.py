@@ -22,12 +22,12 @@ def generate_ai_content(prompt):
         "Content-Type": "application/json"
     }
     payload = {
-        "model": "openai/gpt-3.5-turbo:free",
-        "messages": [
-            {"role": "system", "content": "You are a helpful AI writing assistant."},
-            {"role": "user", "content": f"Write a detailed blog post about {prompt}. Use headings (bold), bullet points, and emojis like ✨🔥💡 for clarity. Include an introduction, body, and conclusion."}
-        ]
-    }
+    "model": "openai/gpt-3.5-turbo:free",
+    "messages": [
+        {"role": "system", "content": "You are a helpful AI writing assistant."},
+        {"role": "user", "content": f"Write a detailed blog post about {prompt}. Use headings (bold), bullet points, and emojis like ✨🔥💡 for clarity. Include an introduction, body, and conclusion."}
+    ]
+}
 
     try:
         response = requests.post(
