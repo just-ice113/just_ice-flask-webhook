@@ -44,6 +44,8 @@ def generate_ai_content(prompt):
         content = data["choices"][0]["message"]["content"].strip()
         formatted = f"<b>Blog Post: {html.escape(prompt.title())}</b>\n\n{content}"
         return formatted
+elif response.status_code == 429:
+    return "⚠️ Daily free quota exceeded. Please try again later or add credits."
     else:
         return f"⚠️ Error {response.status_code}: {response.text}"
 
