@@ -22,12 +22,12 @@ def generate_ai_content(prompt):
         "Content-Type": "application/json"
     }
     payload = {
-    "model": "openai/gpt-3.5-turbo:free",
-    "messages": [
-        {"role": "system", "content": "You are a helpful AI writing assistant."},
-        {"role": "user", "content": f"Write a detailed blog post about {prompt}. Use headings (bold), bullet points, and emojis like ✨🔥💡 for clarity. Include an introduction, body, and conclusion."}
-    ]
-}
+        "model": "openai/gpt-3.5-turbo:free",
+        "messages": [
+            {"role": "system", "content": "You are a helpful AI writing assistant."},
+            {"role": "user", "content": f"Write a detailed blog post about {prompt}. Use headings (bold), bullet points, and emojis like ✨🔥💡 for clarity. Include an introduction, body, and conclusion."}
+        ]
+    }
 
     try:
         response = requests.post(
@@ -44,8 +44,8 @@ def generate_ai_content(prompt):
         content = data["choices"][0]["message"]["content"].strip()
         formatted = f"<b>Blog Post: {html.escape(prompt.title())}</b>\n\n{content}"
         return formatted
-elif response.status_code == 429:
-    return "⚠️ Daily free quota exceeded. Please try again later or add credits."
+    elif response.status_code == 429:
+        return "⚠️ Daily free quota exceeded. Please try again later or add credits."
     else:
         return f"⚠️ Error {response.status_code}: {response.text}"
 
