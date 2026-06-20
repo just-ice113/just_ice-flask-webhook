@@ -25,7 +25,7 @@ def generate_ai_content(prompt):
     "model": "openai/gpt-3.5-turbo:free",
     "messages": [
         {"role": "system", "content": "You are a helpful AI writing assistant."},
-        {"role": "user", "content": f"Write a detailed blog post about {prompt}. Include an introduction, body, and conclusion."}
+        {"role": "user", "content": "Write a short blog post about motivation. Include an introduction, body, and conclusion."}
     ]
 }
 
@@ -153,7 +153,7 @@ def test_openrouter():
     "model": "openai/gpt-3.5-turbo:free",
     "messages": [
         {"role": "system", "content": "You are a helpful AI writing assistant."},
-        {"role": "user", "content": f"Write a detailed blog post about {prompt}. Include an introduction, body, and conclusion."}
+        {"role": "user", "content": "Write a short blog post about motivation. Include an introduction, body, and conclusion."}
     ]
 }
 
